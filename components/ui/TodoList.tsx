@@ -4,20 +4,39 @@ import React, { useState } from "react";
 import { IoShareSocialOutline, IoSearchOutline } from "react-icons/io5";
 import { useCopyToClipboard } from "usehooks-ts";
 import TodoListItem from "./TodoListItem";
+import { Database } from "@/database.types";
 
-const TodoList = ({
+type TodoDto = Database["public"]["Tables"]["todos_no_rls"]["Row"];
+
+interface TodoListProps {
+  sharedUserFullName?: string;
+  ownerUserId?: string;
+  loading?: boolean;
+  todoListData: TodoDto[]; // ✅ todoListData의 타입을 명확히 지정
+  isReadOnly?: boolean;
+  onUpdate: (id: number, updatedContent: string) => void;
+  onCreate: () => void;
+  onDelete: (id: number) => void;
+  onSearch: (terms: string) => void;
+}
+
+const TodoList: React.FC<TodoListProps> = ({
   sharedUserFullName = "",
   ownerUserId = "",
   loading = false,
   todoListData = [],
   isReadOnly = false,
-  onUpdate = (id, updatedContent) => {},
-  onCreate = () => {},
-  onDelete = (id) => {},
-  onSearch = (terms) => {},
+  // onUpdate = (id, updatedContent) => {},
+  // onCreate = () => {},
+  // onDelete = (id) => {},
+  // onSearch = (terms) => {},
+  onUpdate,
+  onCreate,
+  onDelete,
+  onSearch,
 }) => {
   const [userSearchInput, setUserSearchInput] = useState("");
-  const [copiedText, copy] = useCopyToClipboard();
+  const [, copy] = useCopyToClipboard();
 
   const handleCopy = () => {
     const shareLink = `${""}/share/${ownerUserId}`;

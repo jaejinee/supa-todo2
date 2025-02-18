@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { CiCircleCheck, CiEdit } from "react-icons/ci";
 
-const TodoListItem = ({ todo, onDelete, onUpdate = () => {} }) => {
+const TodoListItem = ({ todo, onDelete, onUpdate }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [userInput, setUserInput] = useState(todo?.content ?? "");
 
