@@ -1,11 +1,10 @@
 "use client";
-
-import TodoList from "@/components/ui/TodoList";
 import useTodosController from "../hooks/useTodosController";
+import TodoList from "@/components/ui/TodoList";
 
 interface TodoContainerProps {
-  ownerUserId?: string;
   sharedUserFullName?: string;
+  ownerUserId?: string;
 }
 
 const TodoContainer = ({
@@ -16,10 +15,10 @@ const TodoContainer = ({
     loading,
     todos,
     onCreateEmptyTodos,
-    onUpdateTodos,
     onDeleteTodos,
     onSearchTodos,
-  } = useTodosController(); // CRUD 로직을 받아서 처리하는 컴포넌트
+    onUpdateTodos,
+  } = useTodosController(ownerUserId);
 
   return (
     <div>
@@ -28,13 +27,13 @@ const TodoContainer = ({
         ownerUserId={ownerUserId}
         loading={loading}
         todoListData={todos}
-        isReadOnly={false}
+        isReadOnly={true}
         onUpdate={onUpdateTodos}
         onCreate={onCreateEmptyTodos}
         onDelete={onDeleteTodos}
         onSearch={onSearchTodos}
       />
-    </div> // Todo UI, CRUD를 받아서 보여주는 컴포넌트
+    </div>
   );
 };
 

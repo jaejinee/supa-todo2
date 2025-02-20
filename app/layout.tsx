@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AuthHeader from "./(site)/components/ui/AuthHeader";
+import AuthHeader from "./../components/ui/AuthHeader";
 import { getUser } from "@/actions/auth/user.action";
 
 const geistSans = Geist({
@@ -24,8 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser();
-  console.log("user", user);
+  const user = await getUser({ serverComponent: true });
 
   return (
     <html lang="en">

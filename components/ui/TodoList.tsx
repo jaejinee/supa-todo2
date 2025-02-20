@@ -5,6 +5,7 @@ import { IoShareSocialOutline, IoSearchOutline } from "react-icons/io5";
 import { useCopyToClipboard } from "usehooks-ts";
 import TodoListItem from "./TodoListItem";
 import { Database } from "@/database.types";
+import TodoListItemReadOnly from "./TodoListItemReadOnly";
 
 type TodoDto = Database["public"]["Tables"]["todos_no_rls"]["Row"];
 
@@ -39,7 +40,7 @@ const TodoList: React.FC<TodoListProps> = ({
   const [, copy] = useCopyToClipboard();
 
   const handleCopy = () => {
-    const shareLink = `${""}/share/${ownerUserId}`;
+    const shareLink = `${process.env.NEXT_PUBLIC_AUTH_REDIRECT_TO_HOME}/share/${ownerUserId}`;
     copy(shareLink)
       .then(() => {
         window.alert(`공유링크 복사완료! \n${shareLink}`); // \n 줄바꿈
@@ -108,6 +109,9 @@ const TodoList: React.FC<TodoListProps> = ({
         {todoListData?.length >= 1 ? (
           <ul className="flex flex-col gap-6">
             {(todoListData ?? []).map((todo) => {
+              if (isReadOnly) {
+                return <TodoListItemReadOnly key={todo?.id} todo={todo} />;
+              }
               return (
                 <TodoListItem
                   key={todo?.id}

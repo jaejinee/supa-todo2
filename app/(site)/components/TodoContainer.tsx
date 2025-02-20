@@ -5,13 +5,9 @@ import useTodosController from "../hooks/useTodosController";
 
 interface TodoContainerProps {
   ownerUserId?: string;
-  sharedUserFullName?: string;
 }
 
-const TodoContainer = ({
-  sharedUserFullName,
-  ownerUserId,
-}: TodoContainerProps) => {
+const TodoContainer = ({ ownerUserId }: TodoContainerProps) => {
   const {
     loading,
     todos,
@@ -19,12 +15,11 @@ const TodoContainer = ({
     onUpdateTodos,
     onDeleteTodos,
     onSearchTodos,
-  } = useTodosController(); // CRUD 로직을 받아서 처리하는 컴포넌트
+  } = useTodosController(ownerUserId); // CRUD 로직을 받아서 처리하는 컴포넌트
 
   return (
     <div>
       <TodoList
-        sharedUserFullName={sharedUserFullName}
         ownerUserId={ownerUserId}
         loading={loading}
         todoListData={todos}

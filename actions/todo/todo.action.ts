@@ -27,6 +27,19 @@ export const getTodosById = async (id: number) => {
   return result.data;
 };
 
+// todoList 가져오기 + byUserId
+export const getTodosByUserId = async (userId: string) => {
+  const supabase = await createServerSideClient(true);
+
+  const result = await supabase
+    .from("todos_with_rls")
+    .select("*")
+    .is("deleted_at", null)
+    .eq("user_id", userId); // 특정 id 값과 동일한 id
+
+  return result.data;
+};
+
 // todoList 가져오기 + search
 export const getTodosBySearch = async (terms: string) => {
   const supabase = await createServerSideClient();
